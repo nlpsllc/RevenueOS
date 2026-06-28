@@ -1,0 +1,102 @@
+/* Inter font via Google Fonts — must precede @import "tailwindcss" per CSS layering rules */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-revenue-50: #eef2ff;
+  --color-revenue-100: #e0e7ff;
+  --color-revenue-200: #c7d2fe;
+  --color-revenue-300: #a5b4fc;
+  --color-revenue-400: #818cf8;
+  --color-revenue-500: #6366f1;
+  --color-revenue-600: #4f46e5;
+  --color-revenue-700: #4338ca;
+  --color-revenue-800: #3730a3;
+  --color-revenue-900: #312e81;
+  --color-revenue-950: #1e1b4b;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  html,
+  body {
+    @apply bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+  ::selection {
+    @apply bg-revenue-200 text-revenue-900 dark:bg-revenue-800 dark:text-revenue-100;
+  }
+}
+
+/* Subtle animation keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  @apply bg-gradient-to-r from-revenue-600 via-purple-500 to-revenue-400 bg-clip-text text-transparent dark:from-revenue-400 dark:via-purple-400 dark:to-revenue-300;
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-white/70 backdrop-blur-xl dark:bg-gray-950/70;
+}
+
+/* Subtle grid background for hero sections */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark .bg-grid {
+  background-image:
+    linear-gradient(rgba(129, 140, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Staggered animation delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }

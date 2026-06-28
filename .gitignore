@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.run/
+.tanstack/
+pricing.tsx.save
+*.log
+.env
+.env.local
