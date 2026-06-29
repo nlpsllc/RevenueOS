@@ -22,7 +22,14 @@
 ## Build & Deploy
 - `bun run publish` — builds and serves on port 3000 (the live public surface)
 - `bun run dev` — local development
-- Site is published at https://a879b9fc34c06261658e4cf48055ddb0.ctonew.app
+- **Vercel**: `vite build` (configured in `vercel.json`). Serverless entry at `api/server.ts`. Output: `dist/client/`
+- Site is published at https://a879b9fc34c06261658e4cf48055ddb0.ctonew.app and https://myaisaasapp.org (Vercel)
+
+## Vercel Configuration
+- `vercel.json` — rewrites all routes to `api/server.ts` serverless function
+- `api/server.ts` — imports `dist/server/server.js` SSR handler and wraps for Vercel
+- `.vercel/` dir is gitignored
+- Build command: `vite build`
 
 ## AI CRO Dashboard Modules
 All live at /app/*:
