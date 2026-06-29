@@ -1,29 +1,31 @@
-// Vercel serverless entry point for TanStack Start
-import handler from "../dist/server/server.js";
+import defaultHandler from "../dist/server/server.js";
 
-export default async function vercelHandler(req: any, res: any) {
-  const request = new Request(req.url || "/", {
-    method: req.method || "GET",
-    headers: req.headers as HeadersInit,
-  });
+export default async function handler(req: any, res: any) {
+  try {
+    const url = new URL(req.url || "/", `https://${req.headers.host || "localhost"}`);
 
-  const response = await (handler as { fetch: (r: Request) => Promise<Response> }).fetch(request);
+    const response: Response = await (defaultHandler as any).fetch(url.toString());
 
-  res.statusCode = response.status;
-  response.headers.forEach((value, key) => {
-    res.setHeader(key, value);
-  });
+    res.statusCode = response.status;
+    response.headers.forEach((value: string, key: string) => {
+      res.setHeader(key, value);
+    });
 
-  if (response.body) {
-    const reader = response.body.getReader();
-    const chunks: Uint8Array[] = [];
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      if (value) chunks.push(value);
+    if (response.body) {
+      const reader = response.body.getReader();
+      const chunks: Uint8Array[] = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value) chunks.push(value);
+      }
+      res.end(Buffer.concat(chunks));
+    } else {
+      res.end();
     }
-    res.end(Buffer.concat(chunks));
-  } else {
-    res.end();
+  } catch (error: any) {
+    console.error("Vercel handler error:", error);
+    res.statusCode = 500;
+    res.end(`Handler Error: ${error?.message || error}`);
   }
 }
