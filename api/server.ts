@@ -1,10 +1,20 @@
-import defaultHandler from "../dist/server/server.js";
+import serverModule from "../dist/server/server.js";
 
 export default async function handler(req: any, res: any) {
   try {
-    const url = new URL(req.url || "/", `https://${req.headers.host || "localhost"}`);
+    const protocol = req.headers["x-forwarded-proto"] || "https";
+    const host = req.headers.host || "myaisaasapp.org";
+    const url = new URL(req.url || "/", `${protocol}://${host}`);
 
-    const response: Response = await (defaultHandler as any).fetch(url.toString());
+    const request = new Request(url.toString(), {
+      method: req.method || "GET",
+      headers: Object.entries(req.headers || {}).reduce((acc: any, [key, val]: [string, any]) => {
+        acc[key] = Array.isArray(val) ? val.join(", ") : val;
+        return acc;
+      }, {} as Record<string, string>),
+    });
+
+    const response = await (serverModule as any).fetch(request);
 
     res.statusCode = response.status;
     response.headers.forEach((value: string, key: string) => {
@@ -26,6 +36,7 @@ export default async function handler(req: any, res: any) {
   } catch (error: any) {
     console.error("Vercel handler error:", error);
     res.statusCode = 500;
+    res.setHeader("Content-Type", "text/plain");
     res.end(`Handler Error: ${error?.message || error}`);
   }
 }
