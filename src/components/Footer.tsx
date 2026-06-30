@@ -81,13 +81,32 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href="https://next-level-personalized-services.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-500 transition-colors hover:text-revenue-600 dark:text-gray-400 dark:hover:text-revenue-400"
+                >
+                  Next Level PS
+                </a>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 dark:border-gray-800 sm:flex-row">
           <p className="text-xs text-gray-400 dark:text-gray-500">
-            &copy; {new Date().getFullYear()} RevenueOS. All rights reserved.
+            &copy; {new Date().getFullYear()} RevenueOS. A service of{" "}
+            <a
+              href="https://next-level-personalized-services.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-revenue-600 dark:hover:text-revenue-400"
+            >
+              Next Level Personalized Services
+            </a>
+            . All rights reserved.
           </p>
           <div className="flex gap-4 text-xs text-gray-400 dark:text-gray-500">
             <span>Privacy Policy</span>
